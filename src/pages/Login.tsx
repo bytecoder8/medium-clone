@@ -61,7 +61,7 @@ export function Login() {
             {isSubmitting ? 'Signing in...' : 'Submit'}
           </button>
         </div>
-        <FormErrors error={error} />
+        {error && <FormErrors error={error} />}
       </form>
     </div>
   )

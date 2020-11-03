@@ -1,14 +1,15 @@
 import React from 'react'
-import { FormErrorsType } from '../types'
+import { ServerError } from '../types'
 
 
 type PropsType = {
-  error?: FormErrorsType
+  error: ServerError
 }
 
 export function FormErrors({error}: PropsType) {
-  if (error && error.errors) {
-    const errors = error.errors
+  const { errors } = error
+
+  if (Object.keys(errors).length > 0) {
     return (
       <div className="alert alert-danger">
         <ul>
@@ -18,6 +19,11 @@ export function FormErrors({error}: PropsType) {
         </ul>
       </div>
     )
+  } else {
+    return (
+      <div className="alert alert-danger">
+        { error.message }
+      </div>
+    )
   }
-  return null
 }
