@@ -2,22 +2,24 @@ import axios from 'axios'
 import { useState } from 'react'
 import { ServerError } from '../types'
 
-interface FetchHookResult {
-  doFetch: () => void
-  data: Object
-  isLoading: boolean
-  isError: boolean
-  error?: ServerError
-}
 
-export interface FetchHookOptions {
+export interface FetchOptions {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
   data?: {
     [key: string]: any
   }
 }
 
-export function useFetch(url: string, options?: FetchHookOptions): FetchHookResult {
+interface FetchHookResult {
+  doFetch: (options?: FetchOptions) => void
+  data: Object
+  isLoading: boolean
+  isError: boolean
+  error?: ServerError
+}
+
+
+export function useFetch(url: string): FetchHookResult {
 
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState({})
@@ -25,7 +27,7 @@ export function useFetch(url: string, options?: FetchHookOptions): FetchHookResu
 
   const baseUrl = process.env.REACT_APP_API_BASE
 
-  const doFetch = () => {
+  const doFetch = (options?: FetchOptions) => {
     axios(baseUrl + url, {
       method: options?.method || 'GET',
       data: options?.data || {}

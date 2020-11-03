@@ -8,22 +8,22 @@ export function Login() {
   const [password, setPassword] = useState('')
   const { 
     isLoading: isSubmitting, error, doFetch 
-  } = useFetch('/users/login', { 
-    method: 'POST',
-    data: {
-      user: {
-        email,
-        password
-      }
-    }
-  })
+  } = useFetch('/users/login')
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (isSubmitting) {
       return
     }
-    doFetch()
+    doFetch({ 
+      method: 'POST',
+      data: {
+        user: {
+          email,
+          password
+        }
+      }
+    })
   }
 
   return (
