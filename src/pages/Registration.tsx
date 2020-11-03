@@ -1,11 +1,13 @@
 import React from 'react'
 import { Formik } from 'formik'
 import { InputField } from '../components/InputField'
+import { useFetch } from '../hooks/useFetch'
+import { FormErrors } from '../components/FormErrors'
 
 
 const initialValues = {
   email: '',
-  name: '',
+  username: '',
   password: '',
   password_confirmation: ''
 }
@@ -13,7 +15,7 @@ type RegistrationFormValues = typeof initialValues
 
 type RegistrationFormErrors = {
   email?: string
-  name?: string
+  username?: string
   password?: string
   password_confirmation?: string
 }
@@ -21,8 +23,24 @@ type RegistrationFormErrors = {
 
 export function Registration() {
 
+  const { isLoading, error, doFetch } = useFetch('/users')
+
   const onSubmit = (values: RegistrationFormValues) => {
-    console.log(values);
+    if (isLoading) {
+      return
+    }
+
+    const { email, username, password } = values
+    doFetch({
+      method: 'POST',
+      data: {
+        user: {
+          email,
+          username,
+          password
+        }
+      }
+    })
   }
 
   const validate = ( values: RegistrationFormValues ): RegistrationFormErrors => {
@@ -31,8 +49,8 @@ export function Registration() {
     if (!values.email) {
       errors.email = 'Required'
     }
-    if (!values.name) {
-      errors.name = 'Required'
+    if (!values.username) {
+      errors.username = 'Required'
     }
     if (!values.password) {
       errors.password = 'Required'
@@ -59,8 +77,8 @@ export function Registration() {
             <InputField name="email" type="email" className="form-control" id="input-email" />
           </div>
           <div className="form-group">
-            <label htmlFor="input-name">Name</label>
-            <InputField name="name" className="form-control" id="input-name" />
+            <label htmlFor="input-username">Username</label>
+            <InputField name="username" className="form-control" id="input-username" />
           </div>
           <div className="form-group">
             <label htmlFor="input-password">Password</label>
@@ -74,8 +92,13 @@ export function Registration() {
             <button
               type="submit"
               className="btn btn-primary"
-            >Submit</button>
+              disabled={isLoading}
+            >
+              { isLoading ? 'Submitting...' : 'Submit' }
+            </button>
           </div>
+
+          {error && <FormErrors error={error} />}
         </form>
         )}
       </Formik>

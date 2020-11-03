@@ -28,6 +28,8 @@ export function useFetch(url: string): FetchHookResult {
   const baseUrl = process.env.REACT_APP_API_BASE
 
   const doFetch = (options?: FetchOptions) => {
+    setError(undefined)
+    setIsLoading(true)
     axios(baseUrl + url, {
       method: options?.method || 'GET',
       data: options?.data || {}
