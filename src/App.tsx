@@ -10,8 +10,10 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
-        <Routes />
+        <div className="container">
+          <Navbar />
+          <Routes />
+        </div>
       </BrowserRouter>
     </div>
   );

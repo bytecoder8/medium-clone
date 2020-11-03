@@ -13,8 +13,13 @@ export const Navbar = () => {
       isProtected: false
     },
     {
-      title: 'Article',
-      to: '/articles/5',
+      title: 'Sign In',
+      to: '/login',
+      isProtected: false
+    },
+    {
+      title: 'Sign Up',
+      to: '/register',
       isProtected: false
     },
   ]
@@ -27,7 +32,7 @@ export const Navbar = () => {
       </button>
 
       <div className="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul className="navbar-nav mr-auto">
+        <ul className="navbar-nav ml-auto">
           { links.map( ({to, title, isProtected}) => (
             (isProtected === isLogged) && <NavLink to={to} key={title}>{title}</NavLink>
           ))}
