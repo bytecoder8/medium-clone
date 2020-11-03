@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { Redirect } from 'react-router-dom'
 import { FormErrors } from '../components/FormErrors'
 import { useFetch } from '../hooks/useFetch'
 
-export function Login() {
 
+export function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [isSuccess, setIsSuccess] = useState(false)
   const { 
-    isLoading: isSubmitting, error, doFetch 
-  } = useFetch('/users/login')
+    isLoading: isSubmitting, error, doFetch, data
+  } = useFetch<{user: {token: string}}>('/users/login')
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -26,6 +28,18 @@ export function Login() {
     })
   }
 
+  useEffect(() => {
+    if (!data) {
+      return
+    }
+    localStorage.setItem('medium-token', data.user.token)
+    setIsSuccess(true)
+  }, [data])
+
+  if (isSuccess) {
+    return <Redirect to='/' />
+  }
+  
   return (
     <div className="login-page row">
       <form className="col-md-5 mr-auto ml-auto" onSubmit={handleSubmit}>
