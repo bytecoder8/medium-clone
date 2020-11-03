@@ -1,31 +1,29 @@
-import axios from 'axios'
 import React, { useState } from 'react'
+import { FormErrors } from '../components/FormErrors'
+import { useFetch } from '../hooks/useFetch'
 
 export function Login() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { 
+    isLoading: isSubmitting, error, doFetch 
+  } = useFetch('/users/login', { 
+    method: 'POST',
+    data: {
+      user: {
+        email,
+        password
+      }
+    }
+  })
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (isSubmitting) {
       return
     }
-
-    setIsSubmitting(true)
-    axios(process.env.REACT_APP_API_BASE + '/users/login', {
-      method: 'POST',
-      data: {
-        user: {
-          email,
-          password
-        }
-      }
-    })
-    .then(console.log)
-    .catch(console.dir)
-    .finally(() => setIsSubmitting(false))
+    doFetch()
   }
 
   return (
@@ -63,6 +61,7 @@ export function Login() {
             {isSubmitting ? 'Signing in...' : 'Submit'}
           </button>
         </div>
+        <FormErrors error={error} />
       </form>
     </div>
   )
