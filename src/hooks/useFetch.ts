@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useCallback, useEffect, useState } from 'react'
+import { LOCAL_TOKEN } from '../config'
 import { ServerError } from '../types'
 import { useLocalStorage } from './useLocalStorage'
 
@@ -26,7 +27,7 @@ export function useFetch<T>(url: string): FetchHookResult<T> {
   const [data, setData] = useState()
   const [error, setError] = useState<ServerError>()
   const [options, setOptions] = useState<FetchOptions>({})
-  const [token] = useLocalStorage('medium-token')
+  const [token] = useLocalStorage(LOCAL_TOKEN)
 
   
   const doFetch = useCallback((options: FetchOptions = {}) => {

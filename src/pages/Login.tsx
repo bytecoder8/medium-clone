@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import { ServerErrors } from '../components/ServerErrors'
+import { LOCAL_TOKEN } from '../config'
 import { CurrentUserContext } from '../context/currentUser'
 import { useFetch } from '../hooks/useFetch'
 import { useLocalStorage } from '../hooks/useLocalStorage'
@@ -14,7 +15,7 @@ export function Login() {
   const { 
     isLoading: isSubmitting, error, doFetch, data
   } = useFetch<{user: User}>('/users/login')
-  const [, setToken] = useLocalStorage('medium-token')
+  const [, setToken] = useLocalStorage(LOCAL_TOKEN)
   const [, setCurrentUserState ] = useContext(CurrentUserContext)
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {

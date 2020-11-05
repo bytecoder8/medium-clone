@@ -1,4 +1,5 @@
 import React, { FC, useContext, useEffect } from 'react'
+import { LOCAL_TOKEN } from '../config'
 import { CurrentUserContext } from '../context/currentUser'
 import { useFetch } from '../hooks/useFetch'
 import { useLocalStorage } from '../hooks/useLocalStorage'
@@ -9,7 +10,7 @@ import { User } from '../types'
 export const CurrentUserSetter:FC = ({children}) => {
   const { data, doFetch } = useFetch<{user: User}>('/user')
   const [, setCurrentUserState] = useContext(CurrentUserContext)
-  const [token] = useLocalStorage('medium-token')
+  const [token] = useLocalStorage(LOCAL_TOKEN)
 
   // on init
   useEffect(() => {
