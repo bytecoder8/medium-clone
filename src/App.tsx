@@ -5,18 +5,21 @@ import { Navbar } from './components/Navbar'
 
 import './App.css'
 import { CurrentUserProvider } from './context/currentUser'
+import { CurrentUserSetter } from './components/CurrentUserSetter'
 
 
 function App() {
   return (
     <div className="App">
       <CurrentUserProvider>
-        <BrowserRouter>
-          <div className="container">
-            <Navbar />
-            <Routes />
-          </div>
-        </BrowserRouter>
+        <CurrentUserSetter>
+          <BrowserRouter>
+            <div className="container">
+              <Navbar />
+              <Routes />
+            </div>
+          </BrowserRouter>
+        </CurrentUserSetter>
       </CurrentUserProvider>
     </div>
   );
