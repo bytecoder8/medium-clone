@@ -6,7 +6,7 @@ type PropsType = {
   error: ServerError
 }
 
-export function FormErrors({error}: PropsType) {
+export function ServerErrors({error}: PropsType) {
   const { errors } = error
 
   if (Object.keys(errors).length > 0) {

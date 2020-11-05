@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Redirect } from 'react-router-dom'
-import { FormErrors } from '../components/FormErrors'
+import { ServerErrors } from '../components/ServerErrors'
 import { CurrentUserContext } from '../context/currentUser'
 import { useFetch } from '../hooks/useFetch'
 import { useLocalStorage } from '../hooks/useLocalStorage'
@@ -86,7 +86,7 @@ export function Login() {
             {isSubmitting ? 'Signing in...' : 'Submit'}
           </button>
         </div>
-        {error && <FormErrors error={error} />}
+        {error && <ServerErrors error={error} />}
       </form>
     </div>
   )

@@ -2,7 +2,7 @@ import React from 'react'
 import { Formik } from 'formik'
 import { InputField } from '../components/InputField'
 import { useFetch } from '../hooks/useFetch'
-import { FormErrors } from '../components/FormErrors'
+import { ServerErrors } from '../components/ServerErrors'
 
 
 const initialValues = {
@@ -98,7 +98,7 @@ export function Registration() {
             </button>
           </div>
 
-          {error && <FormErrors error={error} />}
+          {error && <ServerErrors error={error} />}
         </form>
         )}
       </Formik>
