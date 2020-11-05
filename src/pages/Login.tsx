@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import { FormErrors } from '../components/FormErrors'
+import { CurrentUserContext } from '../context/currentUser'
 import { useFetch } from '../hooks/useFetch'
 import { useLocalStorage } from '../hooks/useLocalStorage'
+import { User } from '../types'
 
 
 export function Login() {
@@ -11,9 +13,9 @@ export function Login() {
   const [isSuccess, setIsSuccess] = useState(false)
   const { 
     isLoading: isSubmitting, error, doFetch, data
-  } = useFetch<{user: {token: string}}>('/users/login')
+  } = useFetch<{user: User}>('/users/login')
   const [, setToken] = useLocalStorage('medium-token')
-
+  const [, setCurrentUserState ] = useContext(CurrentUserContext)
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -37,7 +39,13 @@ export function Login() {
     }
     setToken(data.user.token)
     setIsSuccess(true)
-  }, [data, setToken])
+    setCurrentUserState(state => ({
+      ...state,
+      isLoggedIn: true,
+      isLoading: false,
+      currentUser: data.user
+    }))
+  }, [data, setToken, setCurrentUserState])
 
   if (isSuccess) {
     return <Redirect to='/' />

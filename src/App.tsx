@@ -4,17 +4,20 @@ import { Routes } from './routes'
 import { Navbar } from './components/Navbar'
 
 import './App.css'
+import { CurrentUserProvider } from './context/currentUser'
 
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <div className="container">
-          <Navbar />
-          <Routes />
-        </div>
-      </BrowserRouter>
+      <CurrentUserProvider>
+        <BrowserRouter>
+          <div className="container">
+            <Navbar />
+            <Routes />
+          </div>
+        </BrowserRouter>
+      </CurrentUserProvider>
     </div>
   );
 }

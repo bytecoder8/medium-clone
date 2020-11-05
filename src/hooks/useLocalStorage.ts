@@ -12,7 +12,6 @@ export function useLocalStorage(key: string, initialValue: string = ''): ReturnV
   })
 
   useEffect(() => {
-    console.log('writing to localstorage ' + key + ' ' + storedValue)
     localStorage.setItem(key, storedValue)
   }, [key, storedValue])
 
