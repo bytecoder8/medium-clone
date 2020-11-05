@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import { FormErrors } from '../components/FormErrors'
 import { useFetch } from '../hooks/useFetch'
+import { useLocalStorage } from '../hooks/useLocalStorage'
 
 
 export function Login() {
@@ -11,6 +12,8 @@ export function Login() {
   const { 
     isLoading: isSubmitting, error, doFetch, data
   } = useFetch<{user: {token: string}}>('/users/login')
+  const [, setToken] = useLocalStorage('medium-token')
+
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -32,9 +35,9 @@ export function Login() {
     if (!data) {
       return
     }
-    localStorage.setItem('medium-token', data.user.token)
+    setToken(data.user.token)
     setIsSuccess(true)
-  }, [data])
+  }, [data, setToken])
 
   if (isSuccess) {
     return <Redirect to='/' />
