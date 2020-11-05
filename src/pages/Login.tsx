@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import { ServerErrors } from '../components/ServerErrors'
 import { LOCAL_TOKEN } from '../config'
-import { CurrentUserContext } from '../context/currentUser'
+import { actions, CurrentUserContext } from '../context/currentUser'
 import { useFetch } from '../hooks/useFetch'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { User } from '../types'
@@ -16,7 +16,7 @@ export function Login() {
     isLoading: isSubmitting, error, doFetch, data
   } = useFetch<{user: User}>('/users/login')
   const [, setToken] = useLocalStorage(LOCAL_TOKEN)
-  const [, setCurrentUserState ] = useContext(CurrentUserContext)
+  const [, dispatch ] = useContext(CurrentUserContext)
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -40,13 +40,8 @@ export function Login() {
     }
     setToken(data.user.token)
     setIsSuccess(true)
-    setCurrentUserState(state => ({
-      ...state,
-      isLoggedIn: true,
-      isLoading: false,
-      currentUser: data.user
-    }))
-  }, [data, setToken, setCurrentUserState])
+    dispatch(actions.authSuccess(data.user))
+  }, [data, setToken, dispatch])
 
   if (isSuccess) {
     return <Redirect to='/' />

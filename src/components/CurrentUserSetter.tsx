@@ -1,6 +1,6 @@
 import React, { FC, useContext, useEffect } from 'react'
 import { LOCAL_TOKEN } from '../config'
-import { CurrentUserContext } from '../context/currentUser'
+import { actions, CurrentUserContext } from '../context/currentUser'
 import { useFetch } from '../hooks/useFetch'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { User } from '../types'
@@ -9,7 +9,7 @@ import { User } from '../types'
 // the token from localstorage
 export const CurrentUserSetter:FC = ({children}) => {
   const { data, doFetch } = useFetch<{user: User}>('/user')
-  const [, setCurrentUserState] = useContext(CurrentUserContext)
+  const [, dispatch] = useContext(CurrentUserContext)
   const [token] = useLocalStorage(LOCAL_TOKEN)
 
   // on init
@@ -19,23 +19,15 @@ export const CurrentUserSetter:FC = ({children}) => {
     }
 
     doFetch()
-    setCurrentUserState(state => ({
-      ...state,
-      isLoading: true
-    }))
-  }, [doFetch, setCurrentUserState, token])
+    dispatch(actions.loading())
+  }, [doFetch, token, dispatch])
 
   useEffect(() => {
     if (!data) {
       return
     }
-    setCurrentUserState(state => ({
-      ...state,
-      isLoading: false,
-      isLoggedIn: true,
-      currentUser: data.user
-    }))
-  }, [data, setCurrentUserState])
+    dispatch(actions.authSuccess(data.user))
+  }, [data, dispatch])
 
   return <>{children}</>
 }

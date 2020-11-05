@@ -1,3 +1,5 @@
+// helper type to infer action types for reducers
+export type InferValueTypes<T> = T extends { [key: string]: infer U } ? U : never;
 
 type ErrorsType = Record<string, Object[]>
 

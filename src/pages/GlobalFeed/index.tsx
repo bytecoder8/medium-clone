@@ -14,7 +14,7 @@ export function GlobalFeed() {
 
   return (
     <div className="global-feed">
-      {isLoading && <div>Loading...</div>}
+      {isLoading && <div>Loading posts...</div>}
       {error && <ServerErrors error={error} />}
       {!isLoading && data && (
         <Feed articles={data.articles}></Feed>
