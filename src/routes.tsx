@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import { GlobalFeed } from './pages'
+import { GlobalFeed } from './pages/GlobalFeed'
 import { ArticlePage } from './pages/Article'
 import { Login } from './pages/Login'
 import { NotFoundPage } from './pages/NotFound'

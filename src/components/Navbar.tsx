@@ -34,6 +34,11 @@ export const Navbar = () => {
       isGuest: true
     },
     {
+      title: 'New Post',
+      to: '/posts/create',
+      isProtected: true
+    },
+    {
       title: userImage ? userImage : 'Profile',
       to: '/profile',
       isProtected: true

@@ -29,3 +29,16 @@ export interface User {
   bio: string | null,
   image: string | null
 }
+
+export interface Article {
+  author: User
+  slug: string
+  title: string
+  body: string
+  description: string
+  createdAt: string
+  updatedAt: string
+  favorited: boolean
+  favoritesCount: number
+  tagList: string[]
+}
