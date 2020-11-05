@@ -1,28 +1,54 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { CurrentUserContext } from '../context/currentUser'
 import NavLink from './NavLink'
 
 
-export const Navbar = () => {
-  const isLogged = false
+interface LinkType {
+  title: React.ReactNode
+  to: string
+  isGuest?: boolean
+  isProtected?: boolean
+}
 
-  const links = [
+export const Navbar = () => {
+  const [{isLoggedIn, isLoading, currentUser}] = useContext(CurrentUserContext)
+
+  const userImage = !isLoading && currentUser && currentUser.image 
+    ? <img className="" src={currentUser.image} alt="profile" />
+    : null
+
+  let links: LinkType[] = [
     {
       title: 'Global Feed',
       to: '/',
-      isProtected: false
     },
     {
       title: 'Sign In',
       to: '/login',
-      isProtected: false
+      isGuest: true
     },
     {
       title: 'Sign Up',
       to: '/register',
-      isProtected: false
+      isGuest: true
     },
+    {
+      title: userImage ? userImage : 'Profile',
+      to: '/profile',
+      isProtected: true
+    }
   ]
+
+  links = links.filter(link => {
+    if (isLoggedIn && link.isGuest) {
+      return false
+    }
+    if (!isLoggedIn && link.isProtected) {
+      return false
+    }
+    return true
+  })
 
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-primary mb-3">
@@ -33,8 +59,8 @@ export const Navbar = () => {
 
       <div className="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul className="navbar-nav ml-auto">
-          { links.map( ({to, title, isProtected}) => (
-            (isProtected === isLogged) && <NavLink to={to} key={title}>{title}</NavLink>
+          { links.map( ({to, title}, index) => (
+            <NavLink to={to} key={index}>{title}</NavLink>
           ))}
         </ul>
       </div>
