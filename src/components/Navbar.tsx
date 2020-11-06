@@ -20,10 +20,6 @@ export const Navbar = () => {
 
   let links: LinkType[] = [
     {
-      title: 'Global Feed',
-      to: '/',
-    },
-    {
       title: 'Sign In',
       to: '/login',
       isGuest: true

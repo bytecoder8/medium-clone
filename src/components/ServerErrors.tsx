@@ -7,6 +7,10 @@ type PropsType = {
 }
 
 export function ServerErrors({error}: PropsType) {
+  if (!error) {
+    return null
+  }
+
   const { errors } = error
 
   if (Object.keys(errors).length > 0) {

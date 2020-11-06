@@ -26,8 +26,8 @@ export function Feed({articles}: PropsType) {
             </div>
           </div>
           <div className="article-main">
-            <h4>{article.title}</h4>
-            <p>{article.description}</p>
+            <h4 className="title">{article.title}</h4>
+            <p className="description">{article.description}</p>
             <footer className="footer">
               <Link to={`/articles/${article.slug}`} className="read-more">Read More...</Link>
               <ul className="tag-list">

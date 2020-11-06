@@ -23,6 +23,12 @@
   margin-left: 8px;
 }
 
+.article-preview .description {
+  word-wrap: break-word;
+}
+.article-preview .title {
+  word-wrap: break-word;
+}
 
 .footer {
   display: flex;
