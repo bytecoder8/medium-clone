@@ -1,19 +1,19 @@
-.article-preview {
+.articlePreview {
   border-top: 1px solid rgba(0,0,0,.1);
   padding: 1.5rem 0;
 }
 
-.article-meta {
+.articleMeta {
   display: flex;
   align-items: center;
   margin-bottom: 16px;
 }
 
-.user-image {
+.userImage {
   flex-basis: 32px;
 }
 
-.user-image img {
+.userImage img {
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -23,10 +23,10 @@
   margin-left: 8px;
 }
 
-.article-preview .description {
+.description {
   word-wrap: break-word;
 }
-.article-preview .title {
+.title {
   word-wrap: break-word;
 }
 
@@ -36,22 +36,14 @@
   align-items: flex-end;
 }
 
-.read-more {
+.readMore {
   font-size: 0.8rem;
   font-weight: 300;
 }
 
-.tag-list {
+.tagList {
   list-style: none;
   display: flex;
   margin: 0;
   padding: 0;
-}
-
-.tag-list .tag {
-  border: 1px solid #ddd;
-  padding-right: .6em;
-  padding-left: .6em;
-  border-radius: 10rem;
-  color: #aaa;
 }

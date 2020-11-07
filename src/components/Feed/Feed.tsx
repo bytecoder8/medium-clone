@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Article } from '../../types'
 import { articleDate } from '../../utils/datetime'
-import './Feed.css'
+import styles from './Feed.module.css'
 
 
 interface PropsType {
@@ -10,29 +10,30 @@ interface PropsType {
 }
 
 export function Feed({articles}: PropsType) {
+
   return (
-    <div className="feed">
+    <div className={styles.feed}>
       { articles.map((article, index) => (
-        <div className="article-preview" key={index}>
-          <div className="article-meta">
-            <Link to={`/profiles/${article.author.username}`} className="user-image">
+        <div className={styles.articlePreview} key={index}>
+          <div className={styles.articleMeta}>
+            <Link to={`/profiles/${article.author.username}`} className={styles.userImage}>
               <img src="https://static.productionready.io/images/smiley-cyrus.jpg" alt="user" />
             </Link>
-            <div className="info">
+            <div className={styles.info}>
               <Link to={`/profiles/${article.author.username}`}>
                 {article.author.username}
               </Link>
-              <div className="date">{articleDate(article.createdAt)}</div>
+              <div className={styles.date}>{articleDate(article.createdAt)}</div>
             </div>
           </div>
-          <div className="article-main">
-            <h4 className="title">{article.title}</h4>
-            <p className="description">{article.description}</p>
-            <footer className="footer">
-              <Link to={`/articles/${article.slug}`} className="read-more">Read More...</Link>
-              <ul className="tag-list">
+          <div className={styles.articleMain}>
+            <h4 className={styles.title}>{article.title}</h4>
+            <p className={styles.description}>{article.description}</p>
+            <footer className={styles.footer}>
+              <Link to={`/articles/${article.slug}`} className={styles.readMore}>Read More...</Link>
+              <ul className={styles.tagList}>
                 {article.tagList.map( tag => (
-                  <li key={tag} className="tag">{tag}</li>
+                  <li key={tag} className="badge badge-pill badge-light">{tag}</li>
                 ))}
               </ul>
             </footer>

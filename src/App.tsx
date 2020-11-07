@@ -3,7 +3,6 @@ import { BrowserRouter } from 'react-router-dom'
 import { Routes } from './routes'
 import { Navbar } from './components/Navbar'
 
-import './App.css'
 import { CurrentUserProvider } from './context/currentUser'
 import { CurrentUserSetter } from './components/CurrentUserSetter'
 

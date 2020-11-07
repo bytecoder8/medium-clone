@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useFetch } from '../../hooks/useFetch'
 import { Loader } from '../Loader/Loader'
 import { ServerErrors } from '../ServerErrors'
-import './PopularTags.css'
+import styles from './PopularTags.module.css'
 
 
 export function PopularTags() {
@@ -21,7 +21,7 @@ export function PopularTags() {
       .filter((tag, index, values) => values.indexOf(tag) === index) // save only unique tags
     
     tagsElement = tags.map(tag => (
-      <Link key={tag} to={`/tags/${tag}`} className="tag">{tag}</Link>
+      <Link key={tag} to={`/tags/${tag}`} className={styles.tag}>{tag}</Link>
     ))
   }
 
