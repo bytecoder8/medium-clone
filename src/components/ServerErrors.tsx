@@ -13,7 +13,7 @@ export function ServerErrors({error}: PropsType) {
 
   const { errors } = error
 
-  if (Object.keys(errors).length > 0) {
+  if (errors && Object.keys(errors).length > 0) {
     return (
       <div className="alert alert-danger">
         <ul>
