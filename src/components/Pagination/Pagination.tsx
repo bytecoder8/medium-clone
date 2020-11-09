@@ -1,6 +1,7 @@
 import React from 'react'
 import classnames from 'classnames'
 import { clamp, range } from '../../utils'
+import { Link, NavLink } from 'react-router-dom'
 
 
 interface PropsType {
@@ -62,7 +63,7 @@ function PaginationItem({ page, currentPage, url }: ItemPropsType) {
 
   return(
     <li className={classes} key={page}>
-      <a className="page-link" href={urlWithPage}>{page}</a>
+      <NavLink to={urlWithPage} className="page-link">{page}</NavLink>
     </li>
   )
 }
@@ -82,8 +83,8 @@ function PaginationButton({ title, url, page, active = true }: ButtonPropsType) 
   const urlWithPage = `${url}?page=${page}`
   return(
     <li className={classes}>
-      { active 
-        ? <a className="page-link" href={urlWithPage}>{title}</a>
+      { active
+        ? <Link to={urlWithPage} className="page-link">{title}</Link>
         : <span className="page-link">{title}</span>
       }
     </li>
