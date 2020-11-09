@@ -1,0 +1,24 @@
+.feedToggle {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  display: inline-block;
+  font-size: 1.4rem;
+}
+
+.item:not(:first-child) {
+  margin-left: 10px;
+}
+
+.item a {
+  color: var(--gray);
+  text-decoration: none;
+}
+
+.active {
+  color: var(--blue);
+  border-bottom: 3px solid var(--blue);
+}
