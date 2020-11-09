@@ -6,12 +6,15 @@ import { Login } from './pages/Login'
 import { NotFoundPage } from './pages/NotFound'
 import { Registration } from './pages/Registration'
 import { Profile } from './pages/Profile/Profile'
+import { YourFeed } from './pages/YourFeed/YourFeed'
 
 
 export const Routes = () => {
   return(
     <Switch>
       <Route path="/" component={GlobalFeed} exact />
+      <Route path="/tags/:tag" component={GlobalFeed} />
+      <Route path="/feed" component={YourFeed} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Registration} />
       <Route path="/profile" component={Profile} />

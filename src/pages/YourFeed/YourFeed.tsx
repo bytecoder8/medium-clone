@@ -12,32 +12,26 @@ import { ARTICLES_PER_PAGE } from '../../config'
 import { RouteComponentProps } from 'react-router-dom'
 
 
-type ParamsType = {
-  tag?: string
-}
-
-export function GlobalFeed({ location, match }: RouteComponentProps<ParamsType>) {
+export function YourFeed({ location, match }: RouteComponentProps) {
   const { offset, currentPage } = getPaginator(location.search, ARTICLES_PER_PAGE)
-  const tag = match.params.tag
   const params = stringify({
     limit: ARTICLES_PER_PAGE,
-    offset,
-    tag
+    offset
   })
 
-  const apiUrl = `/articles?${params}`
+  const apiUrl = `/articles/feed?${params}`
   const {
     data, isLoading, error, doFetch
   } = useFetch<ArticleResponse>(apiUrl)
 
   useEffect(() => {
     doFetch()
-  }, [doFetch, currentPage, tag])
+  }, [doFetch, currentPage])
 
   return (
-    <div className="global-feed row">
+    <div className="your-feed row">
       <div className="col-md-9">
-        <h2>Global Feed</h2>
+        <h2>Your Feed</h2>
         {isLoading && <Loader title="Loading articles..." />}
         {error && <ServerErrors error={error} />}
         {!isLoading && data && (

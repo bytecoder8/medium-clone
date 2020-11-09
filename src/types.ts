@@ -44,3 +44,10 @@ export interface Article {
   favoritesCount: number
   tagList: string[]
 }
+
+
+// Server responses
+export interface ArticleResponse {
+  articles: Article[]
+  articlesCount: number
+}
