@@ -51,3 +51,6 @@ export interface ArticleResponse {
   articles: Article[]
   articlesCount: number
 }
+
+// null = loading hasn't started yet
+export type LoadingType = boolean | null

@@ -14,7 +14,8 @@ export const CurrentUserSetter:FC = ({children}) => {
 
   // on init
   useEffect(() => {
-    if (!token) {
+    if (token === '') { //sync problems
+      dispatch(actions.setAsGuest())
       return
     }
 

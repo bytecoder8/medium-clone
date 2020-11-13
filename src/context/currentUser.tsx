@@ -1,17 +1,21 @@
 import React, { createContext, useReducer } from 'react'
-import { InferValueTypes, User } from '../types'
+import { InferValueTypes, LoadingType, User } from '../types'
 
 
 const initialState = {
-  isLoading: false,
+  isLoading: null as LoadingType,
   isLoggedIn: false,
-  currentUser: null as User | null
+  currentUser: null as User | null,
+  isGuest: false
 }
 type CurrentUserState = typeof initialState
 
 
 // Auth reducer and actions
 export const actions = {
+  setAsGuest: () => ({
+    type: 'SET_GUEST' as const
+  }),
   loading: () => ({
     type: 'LOADING' as const
   }),
@@ -31,6 +35,13 @@ export type AuthActionTypes = ReturnType<InferValueTypes<typeof actions>>
 
 const authReducer = (state: CurrentUserState = initialState, action: AuthActionTypes): CurrentUserState => {
   switch (action.type) {
+    case 'SET_GUEST':
+      return {...state, 
+        isGuest: true, 
+        isLoading: null,
+        isLoggedIn: false,
+        currentUser: null
+      }
     case 'LOADING':
       return {...state, isLoading: true}
     case 'AUTH_SUCCESS':

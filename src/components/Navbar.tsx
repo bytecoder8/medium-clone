@@ -30,8 +30,8 @@ export const Navbar = () => {
       isGuest: true
     },
     {
-      title: 'New Post',
-      to: '/posts/create',
+      title: 'New Article',
+      to: '/articles/create',
       isProtected: true
     },
     {
@@ -59,11 +59,17 @@ export const Navbar = () => {
       </button>
 
       <div className="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul className="navbar-nav ml-auto">
-          { links.map( ({to, title}, index) => (
-            <NavLink to={to} key={index}>{title}</NavLink>
-          ))}
-        </ul>
+        {isLoading ? (
+          <ul className="navbar-nav ml-auto">
+            <li className="text-light">Loading...</li>
+          </ul>
+        ): (
+          <ul className="navbar-nav ml-auto">
+            { links.map( ({to, title}, index) => (
+              <NavLink to={to} key={index}>{title}</NavLink>
+            ))}
+          </ul>
+        )}
       </div>
     </nav>
   )
