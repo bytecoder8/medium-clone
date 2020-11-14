@@ -1,8 +1,6 @@
 import axios from 'axios'
 import { useCallback, useEffect, useState } from 'react'
-import { LOCAL_TOKEN } from '../config'
 import { ServerError } from '../types'
-import { useLocalStorage } from './useLocalStorage'
 
 
 export interface FetchOptions {
@@ -27,7 +25,6 @@ export function useFetch<T>(url: string): FetchHookResult<T> {
   const [data, setData] = useState()
   const [error, setError] = useState<ServerError>()
   const [options, setOptions] = useState<FetchOptions>({})
-  const [token] = useLocalStorage(LOCAL_TOKEN)
 
   
   const doFetch = useCallback((options: FetchOptions = {}) => {
@@ -43,14 +40,8 @@ export function useFetch<T>(url: string): FetchHookResult<T> {
 
     const baseUrl = process.env.REACT_APP_API_BASE
     const cancelTokenSource = axios.CancelToken.source()
-    const requestOptions = {
-      ...options,
-      headers: {
-        authorization: token ? `Token ${token}`: ''
-      }
-    }
 
-    axios(baseUrl + url, requestOptions)
+    axios(baseUrl + url, options)
     .then( res => {
       setData(res.data)
       setError(undefined)
@@ -70,7 +61,7 @@ export function useFetch<T>(url: string): FetchHookResult<T> {
     return () => {
       cancelTokenSource.cancel()
     }
-  }, [options, isLoading, token, url])
+  }, [options, isLoading, url])
 
   return {
     doFetch,
