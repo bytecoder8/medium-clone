@@ -9,3 +9,12 @@ axios.interceptors.request.use( config => {
   }
   return config
 }, error => Promise.reject(error))
+
+
+axios.interceptors.response.use( res => res, error => {
+  if (error.response && error.response.status === 401) { // reload page when bad token
+    localStorage.removeItem(LOCAL_TOKEN)
+    window.location.href = '/'
+  }
+  return Promise.reject(error)
+})
