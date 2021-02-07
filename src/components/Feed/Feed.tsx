@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Article } from '../../types'
 import { articleDate } from '../../utils/datetime'
+import { AddToFavorites } from '../AddToFavorites'
 import styles from './Feed.module.css'
 
 
@@ -24,6 +25,13 @@ export function Feed({articles}: PropsType) {
                 {article.author.username}
               </Link>
               <div className={styles.date}>{articleDate(article.createdAt)}</div>
+            </div>
+            <div className={styles.favoriteButton}>
+              <AddToFavorites
+                isFavorited={article.favorited}
+                favoritesCount={article.favoritesCount}
+                articleSlug={article.slug}
+              />
             </div>
           </div>
           <div className={styles.articleMain}>

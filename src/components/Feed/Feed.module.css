@@ -23,6 +23,10 @@
   margin-left: 8px;
 }
 
+.favoriteButton {
+  margin-left: auto; /* pull right */
+}
+
 .description {
   word-wrap: break-word;
 }
