@@ -15,6 +15,7 @@ export function Pagination({ total, perPage, currentPage, url } : PropsType) {
   const count = Math.floor(total / perPage)
   
   const pagesVisible = 2 * 2
+  const displayFirstLast = count > 6
   let startPage = clamp(currentPage - pagesVisible, 1, count)
   let endPage = clamp(currentPage + pagesVisible, 1, count)
   const pages = range(startPage, endPage)
@@ -32,8 +33,22 @@ export function Pagination({ total, perPage, currentPage, url } : PropsType) {
     active={currentPage < count}
   />
 
+  const firstButton = <PaginationButton
+    url={url}
+    title="First"
+    page={1}
+    active={currentPage !== 1}
+  />
+  const lastButton = <PaginationButton
+    url={url}
+    title="Last"
+    page={count}
+    active={currentPage !== count}
+  />
+
   return (
     <ul className="pagination">
+      { displayFirstLast && firstButton }
       { prevButton }
       { pages.map(page => (
         <PaginationItem
@@ -44,6 +59,7 @@ export function Pagination({ total, perPage, currentPage, url } : PropsType) {
         />
       )) }
       { nextButton }
+      { displayFirstLast && lastButton }
     </ul>
   )
 }
