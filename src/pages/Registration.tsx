@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Formik } from 'formik'
 import { InputField } from '../components/InputField'
 import { useFetch } from '../hooks/useFetch'
 import { ServerErrors } from '../components/ServerErrors'
+import { Redirect } from 'react-router-dom'
+import { actions, CurrentUserContext } from '../context/currentUser'
+import { User } from '../types'
+import { LOCAL_TOKEN } from '../config'
+import { useLocalStorage } from '../hooks/useLocalStorage'
 
 
 const initialValues = {
@@ -23,7 +28,10 @@ type RegistrationFormErrors = {
 
 export function Registration() {
 
-  const { isLoading, error, doFetch } = useFetch('/users')
+  const { isLoading, error, data, doFetch } = useFetch<{user: User}>('/users')
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [, setToken] = useLocalStorage(LOCAL_TOKEN)
+  const [, dispatch ] = useContext(CurrentUserContext)
 
   const onSubmit = (values: RegistrationFormValues) => {
     if (isLoading) {
@@ -43,6 +51,16 @@ export function Registration() {
     })
   }
 
+  useEffect(() => {
+    if (!data) {
+      return
+    }
+
+    setToken(data.user.token)
+    dispatch(actions.authSuccess(data.user))
+    setIsSuccess(true)
+  }, [data, dispatch, setToken])
+
   const validate = ( values: RegistrationFormValues ): RegistrationFormErrors => {
     const errors: RegistrationFormErrors = { }
 
@@ -61,6 +79,11 @@ export function Registration() {
 
     return errors
   }
+
+  if (isSuccess) {
+    return <Redirect to='/' />
+  }
+
 
   return(
     <div className="registration-page row">
