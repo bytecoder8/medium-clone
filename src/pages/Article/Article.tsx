@@ -31,11 +31,12 @@ export const ArticlePage = ({ match }: RouteComponentProps<ParamsType>) => {
     return null
   }
 
-  const { title, description, tagList } = data.article
+  const { title, description, body, tagList } = data.article
   return (
     <div className={styles.articlePage}>
       <h3>{title}</h3>
       <p>{description}</p>
+      <p>{body}</p>
       { tagList.length > 0 &&
         <>
           Tags:
