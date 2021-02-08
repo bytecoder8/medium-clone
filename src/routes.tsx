@@ -10,6 +10,7 @@ import { YourFeed } from './pages/YourFeed/YourFeed'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { CreateArticle } from './pages/CreateArticle/CreateArticle'
 import { Settings } from './pages/Settings/Settings'
+import { EditArticle } from './pages/EditArticle/EditArticle'
 
 
 export const Routes = () => {
@@ -24,6 +25,7 @@ export const Routes = () => {
       <Route path="/profile" component={Profile} />
       <ProtectedRoute path="/settings" component={Settings} />
       <ProtectedRoute path="/articles/create" exact component={CreateArticle} />
+      <ProtectedRoute path="/articles/:slug/edit" component={EditArticle} />
       <Route path="/articles/:slug" component={ArticlePage} />
       <Route path="*" component={NotFoundPage} />
     </Switch>

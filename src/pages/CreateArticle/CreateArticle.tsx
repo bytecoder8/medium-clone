@@ -11,6 +11,12 @@ export function CreateArticle() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccessfullSubmit, setStateIsSuccessfullSubmit] = useState(false)
 
+  const initialValues: ArticleFormType = {
+    title: '',
+    body: '',
+    description: '',
+    tagList: []
+  }
 
   const onSubmit = (article: ArticleFormType) => {
     setIsSubmitting(true)
@@ -23,7 +29,7 @@ export function CreateArticle() {
     })
   }
 
-  
+
   useEffect(() => {
     if (!data) {
       return
@@ -47,7 +53,12 @@ export function CreateArticle() {
 
   return (
     <div className="create-article-page">
-      <ArticleForm onSubmit={onSubmit} error={error} isSubmitting={isSubmitting} />
+      <ArticleForm
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        error={error}
+        isSubmitting={isSubmitting}
+      />
     </div>
   )
 }

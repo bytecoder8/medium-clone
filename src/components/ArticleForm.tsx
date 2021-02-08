@@ -4,17 +4,24 @@ import { ServerErrors } from './ServerErrors'
 
 
 interface PropsType {
+  initialValues: ArticleFormType
   onSubmit: (article: ArticleFormType) => void
   error: ServerError | undefined
   isSubmitting: boolean
 }
 
-export function ArticleForm({onSubmit, isSubmitting, error}: PropsType) {
-  const [title, setTitle] = useState('')
-  const [body, setBody] = useState('')
-  const [description, setDescription] = useState('')
-  const [tagList, setTagList] = useState<string[]>([])
 
+export function ArticleForm({
+  initialValues, 
+  onSubmit, 
+  isSubmitting, 
+  error
+}: PropsType) {
+
+  const [title, setTitle] = useState(initialValues.title)
+  const [body, setBody] = useState(initialValues.body)
+  const [description, setDescription] = useState(initialValues.description)
+  const [tagList, setTagList] = useState<string[]>(initialValues.tagList)
 
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
