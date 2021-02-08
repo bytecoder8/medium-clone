@@ -18,7 +18,9 @@ export function ServerErrors({error}: PropsType) {
       <div className="alert alert-danger">
         <ul>
           { Object.keys(errors).map(key => (
-            <li key={key}>{key} { errors[key] }</li>
+            <li key={key}>{key}:&nbsp;
+              { Array.isArray(errors[key]) ? errors[key].join(', ') : errors[key] }
+            </li>
           )) }
         </ul>
       </div>
