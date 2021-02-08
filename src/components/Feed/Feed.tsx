@@ -18,7 +18,10 @@ export function Feed({articles}: PropsType) {
         <div className={styles.articlePreview} key={index}>
           <div className={styles.articleMeta}>
             <Link to={`/profiles/${article.author.username}`} className={styles.userImage}>
-              <img src="https://static.productionready.io/images/smiley-cyrus.jpg" alt="user" />
+              { article.author.image 
+                ? (<img src={article.author.image} alt="user" />)
+                : <img src="https://static.productionready.io/images/smiley-cyrus.jpg" alt="user" />
+              }
             </Link>
             <div className={styles.info}>
               <Link to={`/profiles/${article.author.username}`}>
