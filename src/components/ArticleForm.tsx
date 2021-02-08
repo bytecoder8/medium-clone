@@ -1,37 +1,29 @@
-import React, { useEffect, useState } from 'react'
-import { Redirect } from 'react-router-dom'
-import { useFetch } from '../hooks/useFetch'
-import { Article } from '../types'
+import React, { useState } from 'react'
+import { ArticleFormType, ServerError } from '../types'
 import { ServerErrors } from './ServerErrors'
 
 
-export function ArticleForm() {
-  
+interface PropsType {
+  onSubmit: (article: ArticleFormType) => void
+  error: ServerError | undefined
+  isSubmitting: boolean
+}
+
+export function ArticleForm({onSubmit, isSubmitting, error}: PropsType) {
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
   const [description, setDescription] = useState('')
   const [tagList, setTagList] = useState<string[]>([])
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [redirectSlug, setRedirectSlug] = useState('')
 
-  const apiUrl = '/articles'
-  const { data, error, doFetch } = useFetch<{article: Article}>(apiUrl)
 
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    setIsSubmitting(true)
-
-    doFetch({
-      method: 'POST',
-      data: {
-        article: {
-          title,
-          body,
-          description,
-          tagList
-        }
-      }
+    onSubmit({
+      title,
+      description,
+      body,
+      tagList
     })
   }
 
@@ -40,25 +32,6 @@ export function ArticleForm() {
     setTagList(tags)
   }
 
-  useEffect(() => {
-    if (!data) {
-      return
-    }
-
-    setIsSubmitting(false)
-    setRedirectSlug(data.article.slug)
-  }, [data])
-
-  useEffect(() => {
-    if (!error) {
-      return
-    }
-    setIsSubmitting(false)
-  }, [error])
-
-  if (redirectSlug) {
-    return <Redirect to={`/articles/${redirectSlug}`} />
-  }
 
   return (
     <div className='article-page'>

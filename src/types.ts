@@ -45,6 +45,12 @@ export interface Article {
   tagList: string[]
 }
 
+export interface ArticleFormType {
+  title: string
+  body: string
+  description: string
+  tagList: string[]
+}
 
 // Server responses
 export interface ArticleResponse {
