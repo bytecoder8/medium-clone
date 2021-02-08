@@ -9,6 +9,7 @@ import { Profile } from './pages/Profile/Profile'
 import { YourFeed } from './pages/YourFeed/YourFeed'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { CreateArticle } from './pages/CreateArticle/CreateArticle'
+import { Settings } from './pages/Settings/Settings'
 
 
 export const Routes = () => {
@@ -21,6 +22,7 @@ export const Routes = () => {
       <Route path="/login" component={Login} />
       <Route path="/register" component={Registration} />
       <Route path="/profile" component={Profile} />
+      <ProtectedRoute path="/settings" component={Settings} />
       <ProtectedRoute path="/articles/create" exact component={CreateArticle} />
       <Route path="/articles/:slug" component={ArticlePage} />
       <Route path="*" component={NotFoundPage} />

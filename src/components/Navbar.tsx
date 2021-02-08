@@ -6,6 +6,7 @@ import NavLink from './NavLink'
 
 interface LinkType {
   title: React.ReactNode
+  icon?: string
   to: string
   isGuest?: boolean
   isProtected?: boolean
@@ -33,6 +34,12 @@ export const Navbar = () => {
       title: 'New Article',
       to: '/articles/create',
       isProtected: true
+    },
+    {
+      title: 'Settings',
+      to: '/settings',
+      isProtected: true,
+      icon: 'bi-gear'
     },
     {
       title: userImage ? userImage : 'Profile',
@@ -65,8 +72,10 @@ export const Navbar = () => {
           </ul>
         ): (
           <ul className="navbar-nav ml-auto">
-            { links.map( ({to, title}, index) => (
-              <NavLink to={to} key={index}>{title}</NavLink>
+            { links.map( ({to, title, icon}, index) => (
+              <NavLink to={to} key={index}>
+                { icon && (<i className={icon}></i>)} {title}
+              </NavLink>
             ))}
           </ul>
         )}

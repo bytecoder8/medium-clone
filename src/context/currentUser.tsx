@@ -29,7 +29,11 @@ export const actions = {
   authFailure: (error: string) => ({
     type: 'AUTH_FAILURE' as const,
     payload: error
-  })
+  }),
+  updateSuccess: (user: User) => ({
+    type: 'UPDATE_USER_SUCCESS' as const,
+    payload: user
+  }),
 }
 export type AuthActionTypes = ReturnType<InferValueTypes<typeof actions>>
 
@@ -57,6 +61,13 @@ const authReducer = (state: CurrentUserState = initialState, action: AuthActionT
         isLoading: false,
         isLoggedIn: false,
         currentUser: null
+      }
+    case 'UPDATE_USER_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        isLoggedIn: true,
+        currentUser: action.payload
       }
     default:
       return state
