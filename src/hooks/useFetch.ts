@@ -37,6 +37,8 @@ export function useFetch<T>(url: string): FetchHookResult<T> {
   }, [])
   
   useEffect(() => {
+    let skipResponseWhenUnmount = false
+
     if (!isLoading) {
       return
     }
@@ -52,10 +54,18 @@ export function useFetch<T>(url: string): FetchHookResult<T> {
 
     axios(baseUrl + url, requestOptions)
     .then( res => {
+      if (skipResponseWhenUnmount) {
+        return
+      }
+
       setData(res.data)
       setError(undefined)
     })
     .catch(err => {
+      if (skipResponseWhenUnmount) {
+        return
+      }
+
       const error = new ServerError(err.message)
       if (err.response && err.response.data !== null 
         && typeof err.response.data === 'object') 
@@ -65,10 +75,17 @@ export function useFetch<T>(url: string): FetchHookResult<T> {
       
       setError(error)
     })
-    .finally(() => setIsLoading(false))
+    .finally(() => {
+      if (skipResponseWhenUnmount) {
+        return
+      }
+
+      setIsLoading(false)
+    })
     
     return () => {
       cancelTokenSource.cancel()
+      skipResponseWhenUnmount = true
     }
   }, [options, isLoading, token, url])
 
