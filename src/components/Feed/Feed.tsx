@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Article } from '../../types'
+import { getUserImageUrl } from '../../utils'
 import { articleDate } from '../../utils/datetime'
 import { AddToFavorites } from '../AddToFavorites'
 import styles from './Feed.module.css'
@@ -18,10 +19,7 @@ export function Feed({articles}: PropsType) {
         <div className={styles.articlePreview} key={index}>
           <div className={styles.articleMeta}>
             <Link to={`/profiles/${article.author.username}`} className={styles.userImage}>
-              { article.author.image 
-                ? (<img src={article.author.image} alt="user" />)
-                : <img src="https://static.productionready.io/images/smiley-cyrus.jpg" alt="user" />
-              }
+              <img src={getUserImageUrl(article.author)} alt="user" />
             </Link>
             <div className={styles.info}>
               <Link to={`/profiles/${article.author.username}`}>

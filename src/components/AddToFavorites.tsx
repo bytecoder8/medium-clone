@@ -37,7 +37,7 @@ export function AddToFavorites({isFavorited, favoritesCount, articleSlug}: Props
       onClick={handleClick}
       disabled={isLoading}
     >
-      <i className="bi-heart"></i>
+      <i className="bi bi-heart"></i>
       <span> {favoritesCountRecent}</span>
     </button>
   )

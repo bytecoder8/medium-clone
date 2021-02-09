@@ -1,3 +1,27 @@
+.meta {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.userImage {
+  flex-basis: 32px;
+}
+
+.userImage img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.info {
+  margin-left: 8px;
+}
+
+.date {
+  font-size: 0.8rem;
+}
+
 .tagList {
   margin: 0;
   padding: 0;

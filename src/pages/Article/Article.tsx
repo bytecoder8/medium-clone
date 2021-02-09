@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react'
+import { Link, Redirect, RouteComponentProps } from 'react-router-dom'
 import { Loader } from '../../components/Loader/Loader'
 import { ServerErrors } from '../../components/ServerErrors'
+import { CurrentUserContext } from '../../context/currentUser'
 import { useFetch } from '../../hooks/useFetch'
 import { Article } from '../../types'
+import { getUserImageUrl } from '../../utils'
+import { articleDate } from '../../utils/datetime'
 import styles from './Article.module.css'
 
 
@@ -12,13 +15,54 @@ interface ParamsType {
 }
 
 export const ArticlePage = ({ match }: RouteComponentProps<ParamsType>) => {
+  const apiUrl = '/articles/' + match.params.slug
   const {
     data, isLoading, error, doFetch
-  } = useFetch<{article: Article}>('/articles/' + match.params.slug)
+  } = useFetch<{article: Article}>(apiUrl)
+
+  const {
+    data: dataDeletion,
+    doFetch: doDeleteArticle,
+    error: errorDeletion
+  } = useFetch(apiUrl)
   
+  const [{isLoggedIn, currentUser}] = useContext(CurrentUserContext)
+  const isAuthor = () => {
+    if (!data || !isLoggedIn || !currentUser) {
+      return false
+    }
+    return data.article.author.username === currentUser.username
+  }
+
+  const [isSuccessfullDeletion, setIsSuccessfullDeletion] = useState(false)
+  
+  const deleteArticle = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+
+    doDeleteArticle({
+      method: 'DELETE'
+    })
+  }
+
+  // load article
   useEffect(() => {
     doFetch()
   }, [doFetch])
+
+  // redirect after deletion
+  useEffect(() => {
+    if (!dataDeletion) {
+      return
+    }
+
+    setIsSuccessfullDeletion(true)
+  }, [dataDeletion])
+
+
+  // Display component
+  if (isSuccessfullDeletion) {
+    return <Redirect to='/' />
+  }
 
   if (isLoading) {
     return <Loader />
@@ -31,11 +75,40 @@ export const ArticlePage = ({ match }: RouteComponentProps<ParamsType>) => {
     return null
   }
 
-  const { title, description, body, tagList } = data.article
+  const { title, body, tagList, author, createdAt } = data.article
   return (
     <div className={styles.articlePage}>
       <h3>{title}</h3>
-      <p>{description}</p>
+      { errorDeletion && <ServerErrors error={errorDeletion} /> }
+      <div className={styles.meta}>
+        <Link to={`/profiles/${author.username}`} className={styles.userImage}>
+          <img src={getUserImageUrl(author)} alt="user" />
+        </Link>
+        <div className={styles.info}>
+          <Link to={`/profiles/${author.username}`}>
+            {author.username}
+          </Link>
+          <div className={styles.date}>{articleDate(createdAt)}</div>
+        </div>
+        { isAuthor() && (
+          <div className={styles.articleAuthorButtons}>
+            <Link
+              className="btn btn-outline-secondary btn-sm ml-4"
+              to={`/articles/${data.article.slug}/edit`}
+            >
+              <i className="bi bi-pencil-fill"></i>
+              &nbsp;Edit Article
+            </Link>
+            <button
+              className="btn btn-outline-danger btn-sm ml-1"
+              onClick={deleteArticle}
+            >
+              <i className="bi bi-trash-fill"></i>
+              &nbsp;Delete Article
+            </button>
+          </div>
+        )}
+      </div>
       <p>{body}</p>
       { tagList.length > 0 &&
         <>

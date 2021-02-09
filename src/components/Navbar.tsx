@@ -33,7 +33,8 @@ export const Navbar = () => {
     {
       title: 'New Article',
       to: '/articles/create',
-      isProtected: true
+      isProtected: true,
+      icon: 'bi-pencil-square'
     },
     {
       title: 'Settings',
@@ -74,7 +75,7 @@ export const Navbar = () => {
           <ul className="navbar-nav ml-auto">
             { links.map( ({to, title, icon}, index) => (
               <NavLink to={to} key={index}>
-                { icon && (<i className={icon}></i>)} {title}
+                { icon && (<i className={`bi ${icon}`}></i>)} {title}
               </NavLink>
             ))}
           </ul>
