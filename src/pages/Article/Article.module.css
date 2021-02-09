@@ -22,6 +22,10 @@
   font-size: 0.8rem;
 }
 
+.articleButtons {
+  margin-left: 1.5rem;
+}
+
 .tagList {
   margin: 0;
   padding: 0;

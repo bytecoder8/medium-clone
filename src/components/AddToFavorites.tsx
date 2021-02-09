@@ -8,9 +8,10 @@ interface PropsType {
   isFavorited: boolean
   favoritesCount: number
   articleSlug: string
+  text?: string
 }
 
-export function AddToFavorites({isFavorited, favoritesCount, articleSlug}: PropsType) {
+export function AddToFavorites({isFavorited, favoritesCount, articleSlug, text}: PropsType) {
   const apiUrl = `/articles/${articleSlug}/favorite`
   const {doFetch, data, isLoading} = useFetch<{article: Article}>(apiUrl)
 
@@ -31,6 +32,8 @@ export function AddToFavorites({isFavorited, favoritesCount, articleSlug}: Props
     'btn-outline-primary': !isFavoritedRecent
   })
 
+  const htmlText = text ? ` ${text} (${favoritesCountRecent})` : ` ${favoritesCountRecent}`
+
   return (
     <button 
       className={classes}
@@ -38,7 +41,7 @@ export function AddToFavorites({isFavorited, favoritesCount, articleSlug}: Props
       disabled={isLoading}
     >
       <i className="bi bi-heart"></i>
-      <span> {favoritesCountRecent}</span>
+      <span>{ htmlText }</span>
     </button>
   )
 }

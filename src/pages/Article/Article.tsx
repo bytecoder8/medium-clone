@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, Redirect, RouteComponentProps } from 'react-router-dom'
+import { AddToFavorites } from '../../components/AddToFavorites'
 import { Loader } from '../../components/Loader/Loader'
 import { ServerErrors } from '../../components/ServerErrors'
 import { CurrentUserContext } from '../../context/currentUser'
@@ -75,7 +76,10 @@ export const ArticlePage = ({ match }: RouteComponentProps<ParamsType>) => {
     return null
   }
 
-  const { title, body, tagList, author, createdAt } = data.article
+  const { 
+    title, body, tagList, author, createdAt, favorited, favoritesCount, slug
+  } = data.article
+
   return (
     <div className={styles.articlePage}>
       <h3>{title}</h3>
@@ -90,10 +94,10 @@ export const ArticlePage = ({ match }: RouteComponentProps<ParamsType>) => {
           </Link>
           <div className={styles.date}>{articleDate(createdAt)}</div>
         </div>
-        { isAuthor() && (
-          <div className={styles.articleAuthorButtons}>
+        { isAuthor() ? (
+          <div className={styles.articleButtons}>
             <Link
-              className="btn btn-outline-secondary btn-sm ml-4"
+              className="btn btn-outline-secondary btn-sm"
               to={`/articles/${data.article.slug}/edit`}
             >
               <i className="bi bi-pencil-fill"></i>
@@ -107,7 +111,17 @@ export const ArticlePage = ({ match }: RouteComponentProps<ParamsType>) => {
               &nbsp;Delete Article
             </button>
           </div>
-        )}
+        ) : (
+          <div className={styles.articleButtons}>
+            <AddToFavorites
+              isFavorited={favorited}
+              favoritesCount={favoritesCount}
+              articleSlug={slug}
+              text="Favorite Article"
+            />
+          </div>
+        )
+      }
       </div>
       <p>{body}</p>
       { tagList.length > 0 &&
