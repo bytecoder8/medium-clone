@@ -24,15 +24,25 @@ export const Settings = () => {
     event.preventDefault()
 
     setIsSubmitting(true)
+
+    const fields = {
+      image,
+      username,
+      bio,
+      email,
+      password: password as string | undefined
+    }
+    if (!password) {
+      delete fields.password
+    }
+
     doFetch({
       method: 'PUT',
       data: {
-        ...currentUserState.currentUser,
-        image,
-        username,
-        bio,
-        email,
-        password
+        user: {
+          ...currentUserState.currentUser,
+          ...fields
+        }
       }
     })
   }
