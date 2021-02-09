@@ -44,7 +44,7 @@ export const Navbar = () => {
     },
     {
       title: userImage ? userImage : 'Profile',
-      to: '/profile',
+      to: `/profiles/${currentUser?.username}`,
       isProtected: true
     }
   ]

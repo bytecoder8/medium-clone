@@ -22,7 +22,8 @@ export const Routes = () => {
       <Route path="/feed" component={YourFeed} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Registration} />
-      <Route path="/profile" component={Profile} />
+      <Route path="/profiles/:slug" component={Profile} />
+      <Route path="/profiles/:slug/favorites" component={Profile} />
       <ProtectedRoute path="/settings" component={Settings} />
       <ProtectedRoute path="/articles/create" exact component={CreateArticle} />
       <ProtectedRoute path="/articles/:slug/edit" component={EditArticle} />
