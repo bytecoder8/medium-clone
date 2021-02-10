@@ -1,5 +1,5 @@
 import qs from 'query-string'
-import { User } from '../types';
+import { Profile, User } from '../types';
 
 
 export const range = (start: number, stop: number, step: number = 1) => {
@@ -19,6 +19,6 @@ export const getPaginator = (query: string, perPage: number)
   return {currentPage, offset}
 }
 
-export function getUserImageUrl(author: User): string {
+export function getUserImageUrl(author: User | Profile): string {
   return author.image || 'https://static.productionready.io/images/smiley-cyrus.jpg'
 }

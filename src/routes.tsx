@@ -5,7 +5,7 @@ import { ArticlePage } from './pages/Article/Article'
 import { Login } from './pages/Login'
 import { NotFoundPage } from './pages/NotFound'
 import { Registration } from './pages/Registration'
-import { Profile } from './pages/Profile/Profile'
+import { ProfilePage } from './pages/ProfilePage/ProfilePage'
 import { YourFeed } from './pages/YourFeed/YourFeed'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { CreateArticle } from './pages/CreateArticle/CreateArticle'
@@ -22,8 +22,8 @@ export const Routes = () => {
       <Route path="/feed" component={YourFeed} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Registration} />
-      <Route path="/profiles/:slug" component={Profile} />
-      <Route path="/profiles/:slug/favorites" component={Profile} />
+      <Route path="/profiles/:slug" component={ProfilePage} />
+      <Route path="/profiles/:slug/favorites" component={ProfilePage} />
       <ProtectedRoute path="/settings" component={Settings} />
       <ProtectedRoute path="/articles/create" exact component={CreateArticle} />
       <ProtectedRoute path="/articles/:slug/edit" component={EditArticle} />

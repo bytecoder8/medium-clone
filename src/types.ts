@@ -32,6 +32,13 @@ export interface User {
   image: string | null
 }
 
+export interface Profile {
+  username: string
+  bio: string | null
+  image: string | null
+  following: boolean
+}
+
 export interface Article {
   author: User
   slug: string

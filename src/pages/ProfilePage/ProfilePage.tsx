@@ -4,22 +4,23 @@ import { Loader } from '../../components/Loader/Loader'
 import { ServerErrors } from '../../components/ServerErrors'
 import { CurrentUserContext } from '../../context/currentUser'
 import { useFetch } from '../../hooks/useFetch'
-import { User } from '../../types'
+import { Profile } from '../../types'
 import { getUserImageUrl } from '../../utils'
 import { UserArticles } from './UserArticles'
 import styles from './Profile.module.css'
+import { FollowButton } from '../../components/FollowButton/FollowButton'
 
 
 interface ParamsType {
   slug: string
 }
 
-export function Profile({ location, match }: RouteComponentProps<ParamsType>) {
+export function ProfilePage({ location, match }: RouteComponentProps<ParamsType>) {
   const { slug } = match.params
   const isFavorites = location.pathname.includes('favorites')
   const apiUrl = `/profiles/${slug}`
 
-  const {data, error, isLoading, doFetch } = useFetch<{profile: User}>(apiUrl)
+  const {data, error, isLoading, doFetch } = useFetch<{profile: Profile}>(apiUrl)
   const [ { currentUser } ] = useContext(CurrentUserContext)
 
   useEffect(() => {
@@ -54,9 +55,12 @@ export function Profile({ location, match }: RouteComponentProps<ParamsType>) {
               <i className="bi bi-gear"></i>&nbsp;Edit Profile Settings
             </Link>
           ) : (
-            <button className="btn btn-outline-secondary btn-sm float-right">
-              <i className="bi bi-plus"></i>&nbsp;Unfollow
-            </button>
+            <div className="float-right">
+              <FollowButton
+                username={profile.username}
+                isFollowed={profile.following}
+              />
+            </div>
           )}
         </div>
       </div>
