@@ -6,6 +6,7 @@ import { CurrentUserContext } from '../../context/currentUser'
 import { useFetch } from '../../hooks/useFetch'
 import { User } from '../../types'
 import { getUserImageUrl } from '../../utils'
+import { UserArticles } from './UserArticles'
 import styles from './Profile.module.css'
 
 
@@ -17,14 +18,14 @@ export function Profile({ location, match }: RouteComponentProps<ParamsType>) {
   const { slug } = match.params
   const isFavorites = location.pathname.includes('favorites')
   const apiUrl = `/profiles/${slug}`
-  
-  const {data, error, isLoading, doFetch } = useFetch<{profile: User}>(apiUrl)
 
+  const {data, error, isLoading, doFetch } = useFetch<{profile: User}>(apiUrl)
   const [ { currentUser } ] = useContext(CurrentUserContext)
 
   useEffect(() => {
     doFetch()
-  }, [doFetch])
+  }, [doFetch, apiUrl])
+
 
   if (isLoading) {
     return <Loader title="Loading user's profile" />
@@ -75,8 +76,13 @@ export function Profile({ location, match }: RouteComponentProps<ParamsType>) {
           </ul>
         </div>
       </div>
-      <div>
-        User Articles
+      <div className={styles.articles}>
+        <UserArticles
+          username={profile.username}
+          isFavorites={isFavorites}
+          query={location.search}
+          url={match.url}
+        />
       </div>
     </div>
   )
