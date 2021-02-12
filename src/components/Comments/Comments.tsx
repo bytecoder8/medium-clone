@@ -23,6 +23,18 @@ export function Comments({articleSlug}: {articleSlug: string}) {
     [],
   )
 
+  const {
+    doFetch: doDeleteComment
+  } = useFetch<{}>(`/articles/${articleSlug}/comments/`)
+
+  const onDelete = (comment: Comment) => {
+    doDeleteComment({
+      method: 'DELETE',
+      appendToUrl: comment.id.toString()
+    })
+    setComments( prev => prev.filter(e => e.id !== comment.id))
+  }
+
 
   useEffect(() => {
     doFetch()
@@ -43,7 +55,7 @@ export function Comments({articleSlug}: {articleSlug: string}) {
         
         {isLoading && <Loader title="Loading comments" />}
         {error && <ServerErrors error={error} header="Error loading comments" /> }
-        {comments && <CommentsList comments={comments} />}
+        {comments && <CommentsList comments={comments} onDelete={onDelete} />}
       </div>
     </div>
   )

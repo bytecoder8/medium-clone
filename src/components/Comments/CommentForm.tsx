@@ -18,6 +18,8 @@ export function CommentForm({ articleSlug, onCommentSaved }: PropsType) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     
+    setBody('')
+
     setIsSubmitting(true)
     doFetch({
       method: 'POST',
@@ -64,7 +66,7 @@ export function CommentForm({ articleSlug, onCommentSaved }: PropsType) {
         <button
           type="submit"
           className="btn btn-success"
-          disabled={isSubmitting}
+          disabled={isSubmitting || body.length < 1}
         >
           {isSubmitting ? 'Saving...' : 'Submit'}
         </button>

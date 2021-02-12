@@ -9,7 +9,8 @@ export interface FetchOptions {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
   data?: {
     [key: string]: any
-  }
+  },
+  appendToUrl?: string
 }
 
 interface FetchHookResult<T> {
@@ -52,7 +53,9 @@ export function useFetch<T>(url: string): FetchHookResult<T> {
       }
     }
 
-    axios(baseUrl + url, requestOptions)
+    const finalUrl = baseUrl + url + (requestOptions.appendToUrl ? requestOptions.appendToUrl : '')
+
+    axios(finalUrl, requestOptions)
     .then( res => {
       if (skipResponseWhenUnmount) {
         return
