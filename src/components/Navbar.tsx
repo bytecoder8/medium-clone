@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { CurrentUserContext } from '../context/currentUser'
+import { Logout } from './Logout'
 import NavLink from './NavLink'
 
 
@@ -59,6 +60,8 @@ export const Navbar = () => {
     return true
   })
 
+
+
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-primary mb-3">
       <Link to="/" className="navbar-brand">Home</Link>
@@ -78,6 +81,11 @@ export const Navbar = () => {
                 { icon && (<i className={`bi ${icon}`}></i>)} {title}
               </NavLink>
             ))}
+            {isLoggedIn && (
+              <li className="nav-item">
+                <Logout classes="nav-link" />
+              </li>
+            )}
           </ul>
         )}
       </div>

@@ -56,12 +56,7 @@ const authReducer = (state: CurrentUserState = initialState, action: AuthActionT
         currentUser: action.payload
       }
     case 'AUTH_REVOKE':
-      return {
-        ...state,
-        isLoading: false,
-        isLoggedIn: false,
-        currentUser: null
-      }
+      return initialState
     case 'UPDATE_USER_SUCCESS':
       return {
         ...state,
