@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, Redirect, RouteComponentProps } from 'react-router-dom'
 import { AddToFavorites } from '../../components/AddToFavorites'
+import { Comments } from '../../components/Comments/Comments'
 import { Loader } from '../../components/Loader/Loader'
 import { ServerErrors } from '../../components/ServerErrors'
 import { CurrentUserContext } from '../../context/currentUser'
@@ -134,6 +135,8 @@ export const ArticlePage = ({ match }: RouteComponentProps<ParamsType>) => {
           </ul>
         </>
       }
+
+      <Comments articleSlug={slug} />
     </div>
   )
 }

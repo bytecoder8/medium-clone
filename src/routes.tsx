@@ -19,7 +19,7 @@ export const Routes = () => {
     <Switch>
       <Route path="/" component={GlobalFeed} exact />
       <Route path="/tags/:tag" component={GlobalFeed} />
-      <Route path="/feed" component={YourFeed} />
+      <ProtectedRoute path="/feed" component={YourFeed} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Registration} />
       <Route path="/profiles/:slug" component={ProfilePage} />

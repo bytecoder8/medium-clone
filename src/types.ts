@@ -59,6 +59,14 @@ export interface ArticleFormType {
   tagList: string[]
 }
 
+export interface Comment {
+  id: number
+  createdAt: string
+  updatedAt: string
+  body: string
+  author: Profile
+}
+
 // Server responses
 export interface ArticleResponse {
   articles: Article[]
