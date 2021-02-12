@@ -9,9 +9,13 @@ import styles from './CommentsList.module.css'
 interface PropsType {
   comments: Comment[]
   onDelete: (comment: Comment) => void
+  username?: string
 }
 
-export function CommentsList({comments, onDelete}: PropsType) {
+export function CommentsList({comments, onDelete, username}: PropsType) {
+
+  const isAuthor = (authorUsername: string) => authorUsername === username
+
   return (
     <div>
       {comments.map( comment => (
@@ -27,9 +31,11 @@ export function CommentsList({comments, onDelete}: PropsType) {
               {comment.author.username}
             </Link>
             <span className={styles.date}>{articleDate(comment.createdAt)}</span>
-            <span onClick={() => onDelete(comment)} className={styles.deleteButton}>
-              <i className="bi bi-trash"></i>
-            </span>
+            { isAuthor(comment.author.username) && (
+              <span onClick={() => onDelete(comment)} className={styles.deleteButton}>
+                <i className="bi bi-trash"></i>
+              </span>
+            )}
           </div>
         </div>
       ))}

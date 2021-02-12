@@ -9,7 +9,7 @@ import { CommentsList } from './CommentsList'
 
 
 export function Comments({articleSlug}: {articleSlug: string}) {
-  const [{ isLoggedIn }] = useContext(CurrentUserContext)
+  const [{ isLoggedIn, currentUser }] = useContext(CurrentUserContext)
   const { 
     data, isLoading, error, doFetch 
   } = useFetch<{comments: Comment[]}>(`/articles/${articleSlug}/comments`)
@@ -55,7 +55,13 @@ export function Comments({articleSlug}: {articleSlug: string}) {
         
         {isLoading && <Loader title="Loading comments" />}
         {error && <ServerErrors error={error} header="Error loading comments" /> }
-        {comments && <CommentsList comments={comments} onDelete={onDelete} />}
+        {comments && (
+          <CommentsList
+            comments={comments}
+            onDelete={onDelete}
+            username={currentUser?.username}
+          />
+        )}
       </div>
     </div>
   )
