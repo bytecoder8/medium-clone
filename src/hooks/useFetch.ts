@@ -69,13 +69,15 @@ export function useFetch<T>(url: string): FetchHookResult<T> {
         return
       }
 
-      const error = new ServerError(err.message)
+      const error = new ServerError(
+        `${err.message}: ${err.response?.data?.message}`
+      )
       if (err.response && err.response.data !== null 
         && typeof err.response.data === 'object') 
       {
         error.errors = err.response.data.errors
       }
-      
+
       setError(error)
     })
     .finally(() => {
