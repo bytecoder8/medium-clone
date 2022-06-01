@@ -58,6 +58,7 @@ export function CreateArticle() {
         onSubmit={onSubmit}
         error={error}
         isSubmitting={isSubmitting}
+        title="Create Article"
       />
     </div>
   )

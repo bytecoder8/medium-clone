@@ -8,6 +8,7 @@ interface PropsType {
   onSubmit: (article: ArticleFormType) => void
   error: ServerError | undefined
   isSubmitting: boolean
+  title?: string
 }
 
 
@@ -15,7 +16,8 @@ export function ArticleForm({
   initialValues, 
   onSubmit, 
   isSubmitting, 
-  error
+  error,
+  title: htmlTitle
 }: PropsType) {
 
   const [title, setTitle] = useState(initialValues.title)
@@ -43,7 +45,7 @@ export function ArticleForm({
   return (
     <div className='article-page'>
       <form className="col-md-8 mr-auto ml-auto" onSubmit={handleSubmit}>
-        <h2>Settings</h2>
+        <h2>{ htmlTitle ? htmlTitle : 'Article Form' }</h2>
         {error && <ServerErrors error={error} />}
         <div className="form-group">
           <label htmlFor="input-title">Title</label>

@@ -102,6 +102,7 @@ export function EditArticle({ match }: RouteComponentProps<ParamsType>) {
         onSubmit={onSubmit}
         error={error}
         isSubmitting={isSubmitting}
+        title="Edit Article"
       />
     </div>
   )
