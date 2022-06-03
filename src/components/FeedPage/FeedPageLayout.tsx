@@ -1,8 +1,12 @@
-import React from 'react'
+import { ReactNode } from 'react'
 import { PopularTags } from '../PopularTags/PopularTags'
 
 
-export const FeedPageLayout:React.FC<{className?: string}> = ({ children, className = '' }) => {
+interface FeedPageLayoutProps {
+  children: ReactNode
+  className?: string
+}
+export const FeedPageLayout = ({ children, className = '' } : FeedPageLayoutProps) => {
   return (
     <div className={'row ' + className}>
       <div className="col-md-9">

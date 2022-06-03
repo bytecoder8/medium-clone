@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { stringify } from 'query-string'
 import { Loader } from '../../components/Loader/Loader'
 import { ServerErrors } from '../../components/ServerErrors'

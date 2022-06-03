@@ -44,7 +44,7 @@ export function useFetch<T>(url: string): FetchHookResult<T> {
       return
     }
 
-    const baseUrl = process.env.REACT_APP_API_BASE
+    const baseUrl = import.meta.env.VITE_API_BASE
     const cancelTokenSource = axios.CancelToken.source()
     const requestOptions = {
       ...options,

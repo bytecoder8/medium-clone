@@ -1,13 +1,17 @@
-import React, { FC, useContext, useEffect } from 'react'
+import { FC, useContext, useEffect, ReactNode } from 'react'
 import { LOCAL_TOKEN } from '../config'
 import { actions, CurrentUserContext } from '../context/currentUser'
 import { useFetch } from '../hooks/useFetch'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { User } from '../types'
 
+
+interface CurrentUserSetterProps {
+  children: ReactNode
+}
 // Gets information about current user from the server using 
 // the token from localstorage
-export const CurrentUserSetter:FC = ({children}) => {
+export const CurrentUserSetter = ({children}: CurrentUserSetterProps) => {
   const { data, doFetch } = useFetch<{user: User}>('/user')
   const [, dispatch] = useContext(CurrentUserContext)
   const [token] = useLocalStorage(LOCAL_TOKEN)
