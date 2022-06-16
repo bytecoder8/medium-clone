@@ -1,7 +1,12 @@
+.banner {
+  padding: 1rem 0;
+}
+
 .meta {
   display: flex;
   align-items: center;
   margin-bottom: 16px;
+  margin-top: 2rem;
 }
 
 .userImage {
@@ -20,6 +25,7 @@
 
 .date {
   font-size: 0.8rem;
+  color: #bbb;
 }
 
 .articleButtons {

@@ -37,7 +37,7 @@ export function GlobalFeed({ location, match }: RouteComponentProps<ParamsType>)
   return (
     <FeedPageLayout className="global-feed">
       <FeedToggle tag={tag} />
-      {isLoading && <Loader title="Loading articles..." />}
+      {isLoading && <Loader className="d-flex justify-content-center mt-5 mb-5" /> }
       {error && <ServerErrors error={error} />}
       <FeedContent isLoading={isLoading} data={data} url={match.url} currentPage={currentPage} />
     </FeedPageLayout>

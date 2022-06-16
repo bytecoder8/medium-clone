@@ -83,57 +83,70 @@ export const ArticlePage = ({ match }: RouteComponentProps<ParamsType>) => {
 
   return (
     <div className={styles.articlePage}>
-      <h3>{title}</h3>
-      { errorDeletion && <ServerErrors error={errorDeletion} /> }
-      <div className={styles.meta}>
-        <Link to={`/profiles/${author.username}`} className={styles.userImage}>
-          <img src={getUserImageUrl(author)} alt="user" />
-        </Link>
-        <div className={styles.info}>
-          <Link to={`/profiles/${author.username}`}>
-            {author.username}
+      <div className={styles.banner}>
+        <h1 className={styles.title}>{title}</h1>
+        <div className={styles.meta}>
+          <Link to={`/profiles/${author.username}`} className={styles.userImage}>
+            <img src={getUserImageUrl(author)} alt="user" />
           </Link>
-          <div className={styles.date}>{articleDate(createdAt)}</div>
-        </div>
-        { isAuthor() ? (
-          <div className={styles.articleButtons}>
-            <Link
-              className="btn btn-outline-secondary btn-sm"
-              to={`/articles/${data.article.slug}/edit`}
-            >
-              <i className="bi bi-pencil-fill"></i>
-              &nbsp;Edit Article
+          <div className={styles.info}>
+            <Link to={`/profiles/${author.username}`} className={styles.userName}>
+              {author.username}
             </Link>
-            <button
-              className="btn btn-outline-danger btn-sm ml-1"
-              onClick={deleteArticle}
-            >
-              <i className="bi bi-trash-fill"></i>
-              &nbsp;Delete Article
-            </button>
+            <div className={styles.date}>{articleDate(createdAt)}</div>
           </div>
-        ) : (
-          <div className={styles.articleButtons}>
-            <AddToFavorites
-              isFavorited={favorited}
-              favoritesCount={favoritesCount}
-              articleSlug={slug}
-              text="Favorite Article"
-            />
-          </div>
-        )
-      }
+          { isAuthor() ? (
+            <div className={styles.articleButtons}>
+              <Link
+                className="btn btn-outline-secondary btn-sm"
+                to={`/articles/${data.article.slug}/edit`}
+              >
+                <i className="bi bi-pencil-fill"></i>
+                &nbsp;Edit Article
+              </Link>
+              <button
+                className="btn btn-outline-danger btn-sm ml-1"
+                onClick={deleteArticle}
+              >
+                <i className="bi bi-trash-fill"></i>
+                &nbsp;Delete Article
+              </button>
+            </div>
+          ) : (
+            isLoggedIn && (
+              <div className={styles.articleButtons}>
+                <AddToFavorites
+                  isFavorited={favorited}
+                  favoritesCount={favoritesCount}
+                  articleSlug={slug}
+                  text="Favorite Article"
+                />
+              </div>
+            )
+          )
+        }
+        </div>
       </div>
+
+      { errorDeletion && <ServerErrors error={errorDeletion} /> }
+      
       <p>{body}</p>
+      
       { tagList.length > 0 &&
-        <>
-          Tags:
-          <ul className={styles.tagList}>
-            { tagList.map(tag => (
-              <li className="badge badge-pill badge-light" key={tag}>{ tag }</li>
-            )) }
-          </ul>
-        </>
+        <ul className={styles.tagList}>
+          { tagList.map(tag => (
+            <li className="badge badge-pill badge-light" key={tag}>{ tag }</li>
+          )) }
+        </ul>
+      }
+      <hr />
+
+      { !isLoggedIn && 
+        <div className="row mt-4 mb-2">
+          <div className="col-xs-12 col-md-8 offset-md-2">
+            <Link to="/login">Sign in</Link> or <Link to="/register">sign up</Link> to add comments on this article.
+          </div>
+        </div>
       }
 
       <Comments articleSlug={slug} />

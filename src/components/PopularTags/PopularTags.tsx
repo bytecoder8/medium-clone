@@ -34,7 +34,7 @@ export function PopularTags() {
   }
 
   return (
-    <div className="popular-tags">
+    <div className={styles.popularTags}>
       <h3>Popular Tags</h3>
       {tagsElement}
     </div>

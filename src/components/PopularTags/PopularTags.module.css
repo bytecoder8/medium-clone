@@ -1,8 +1,26 @@
+.popularTags {
+  background-color: #f3f3f3;
+  padding: 5px 10px 10px;
+  border-radius: 4px;
+}
+
 .tag {
-  border: 1px solid #ddd;
-  padding-right: .6em;
-  padding-left: .6em;
+  display: inline-block;
+
+  color: #fff;
+  font-size: .8rem;
+  background-color: #818a91;
+
+  margin-right: 3px;
+  margin-bottom: 0.2rem;
+  white-space: nowrap;
+  padding: 0.1rem 0.6rem;
   border-radius: 10rem;
 
-  display: inline-block;
+  vertical-align: middle;
+}
+
+.tag:hover {
+  color: #fff;
+  text-decoration: none;
 }

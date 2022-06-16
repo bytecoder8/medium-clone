@@ -31,7 +31,7 @@ export function YourFeed({ location, match }: RouteComponentProps) {
   return (
     <FeedPageLayout className="your-feed">
       <FeedToggle />
-      {isLoading && <Loader title="Loading articles..." />}
+      {isLoading && <Loader className="d-flex justify-content-center mt-5 mb-5" />}
       {error && <ServerErrors error={error} />}
       <FeedContent isLoading={isLoading} data={data} url={match.url} currentPage={currentPage} />
     </FeedPageLayout>
