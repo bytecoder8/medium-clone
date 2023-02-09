@@ -1,4 +1,3 @@
-import React from 'react'
 import { ServerError } from '../types'
 
 
@@ -21,7 +20,7 @@ export function ServerErrors({ error, header }: PropsType) {
         <ul>
           { Object.keys(errors).map(key => (
             <li key={key}>{key}:&nbsp;
-              { Array.isArray(errors[key]) ? errors[key].join(', ') : errors[key] }
+              { Array.isArray(errors[key]) ? errors[key].join(', ') : errors[key].toString() }
             </li>
           )) }
         </ul>

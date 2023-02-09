@@ -6,7 +6,8 @@ import { RouteComponentProps } from 'react-router'
 type NavLinkProps = {
   to: string,
   tag?: string,
-  exact?: boolean
+  exact?: boolean,
+  children?: React.ReactNode
 }
 
 
