@@ -23,7 +23,7 @@ export const ArticlePage = ({ match }: RouteComponentProps<ParamsType>) => {
   } = useFetch<{article: Article}>(apiUrl)
 
   const {
-    data: dataDeletion,
+    status: deletionStatus,
     doFetch: doDeleteArticle,
     error: errorDeletion
   } = useFetch(apiUrl)
@@ -36,8 +36,6 @@ export const ArticlePage = ({ match }: RouteComponentProps<ParamsType>) => {
     return data.article.author.username === currentUser.username
   }
 
-  const [isSuccessfullDeletion, setIsSuccessfullDeletion] = useState(false)
-  
   const deleteArticle = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
 
@@ -51,18 +49,8 @@ export const ArticlePage = ({ match }: RouteComponentProps<ParamsType>) => {
     doFetch()
   }, [doFetch])
 
-  // redirect after deletion
-  useMemo(() => {
-    if (!dataDeletion) {
-      return
-    }
-
-    setIsSuccessfullDeletion(true)
-  }, [dataDeletion])
-
-
   // Display component
-  if (isSuccessfullDeletion) {
+  if (deletionStatus === 'succeeded') {
     return <Redirect to='/' />
   }
 

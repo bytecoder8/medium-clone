@@ -13,17 +13,21 @@ export interface FetchOptions {
   appendToUrl?: string
 }
 
+type Statuses = 'idle' | 'loading' | 'succeeded' | 'failed'
+
 interface FetchHookResult<T> {
   doFetch: (options?: FetchOptions) => void
   data?: T
   isLoading: boolean
   isError: boolean
   error?: ServerError
+  status: Statuses
 }
 
 
 export function useFetch<T>(url: string): FetchHookResult<T> {
 
+  const [status, setStatus] = useState<Statuses>('idle')
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState()
   const [error, setError] = useState<ServerError>()
@@ -35,6 +39,7 @@ export function useFetch<T>(url: string): FetchHookResult<T> {
     setError(undefined)
     setOptions(options)
     setIsLoading(true)
+    setStatus('loading')
   }, [])
   
   useEffect(() => {
@@ -63,6 +68,7 @@ export function useFetch<T>(url: string): FetchHookResult<T> {
 
       setData(res.data)
       setError(undefined)
+      setStatus('succeeded')
     })
     .catch(err => {
       if (skipResponseWhenUnmount) {
@@ -79,6 +85,7 @@ export function useFetch<T>(url: string): FetchHookResult<T> {
       }
 
       setError(error)
+      setStatus('failed')
     })
     .finally(() => {
       if (skipResponseWhenUnmount) {
@@ -99,6 +106,7 @@ export function useFetch<T>(url: string): FetchHookResult<T> {
     data,
     isLoading,
     isError: !!error,
-    error
+    error,
+    status
   }
 }
