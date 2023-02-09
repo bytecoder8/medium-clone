@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import { ArticleForm } from '../../components/ArticleForm'
 import { useFetch } from '../../hooks/useFetch'
@@ -39,7 +39,7 @@ export function CreateArticle() {
     setStateIsSuccessfullSubmit(true)
   }, [data])
 
-  useEffect(() => {
+  useMemo(() => {
     if (!error) {
       return
     }

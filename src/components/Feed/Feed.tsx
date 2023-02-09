@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { CurrentUserContext } from '../../context/currentUser'
 import { Article } from '../../types'
 import { getUserImageUrl } from '../../utils'
 import { articleDate } from '../../utils/datetime'
@@ -12,6 +13,7 @@ interface PropsType {
 }
 
 export function Feed({articles}: PropsType) {
+  const [{isLoggedIn}] = useContext(CurrentUserContext)
 
   return (
     <div className={styles.feed}>
@@ -32,6 +34,7 @@ export function Feed({articles}: PropsType) {
                 isFavorited={article.favorited}
                 favoritesCount={article.favoritesCount}
                 articleSlug={article.slug}
+                enabled={isLoggedIn}
               />
             </div>
           </div>

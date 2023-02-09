@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Redirect, RouteComponentProps } from 'react-router-dom'
 import { ArticleForm } from '../../components/ArticleForm'
 import { Loader } from '../../components/Loader/Loader'
@@ -49,7 +49,7 @@ export function EditArticle({ match }: RouteComponentProps<ParamsType>) {
     doFetchArticle()
   }, [doFetchArticle])
 
-  useEffect(() => {
+  useMemo(() => {
     if (!fetchedArticleData) {
       return
     }
@@ -65,7 +65,7 @@ export function EditArticle({ match }: RouteComponentProps<ParamsType>) {
 
 
   // Update Article
-  useEffect(() => {
+  useMemo(() => {
     if (!data) {
       return
     }
@@ -74,7 +74,7 @@ export function EditArticle({ match }: RouteComponentProps<ParamsType>) {
     setStateIsSuccessfullSubmit(true)
   }, [data])
 
-  useEffect(() => {
+  useMemo(() => {
     if (!error) {
       return
     }

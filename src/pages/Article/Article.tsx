@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { Link, Redirect, RouteComponentProps } from 'react-router-dom'
 import { AddToFavorites } from '../../components/AddToFavorites'
 import { Comments } from '../../components/Comments/Comments'
@@ -52,7 +52,7 @@ export const ArticlePage = ({ match }: RouteComponentProps<ParamsType>) => {
   }, [doFetch])
 
   // redirect after deletion
-  useEffect(() => {
+  useMemo(() => {
     if (!dataDeletion) {
       return
     }

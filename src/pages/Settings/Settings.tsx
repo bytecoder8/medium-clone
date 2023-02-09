@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { ServerErrors } from '../../components/ServerErrors'
 import { CurrentUserContext, actions } from '../../context/currentUser'
 import { useFetch } from '../../hooks/useFetch'
@@ -47,8 +47,7 @@ export const Settings = () => {
     })
   }
 
-
-  useEffect(() => {
+  useMemo(() => {
     if (!currentUserState.currentUser) {
       return
     }
@@ -59,6 +58,7 @@ export const Settings = () => {
     setEmail(currentUser.email)
     currentUser.bio && setBio(currentUser.bio)
   }, [currentUserState.currentUser])
+
 
   // after updating user, update context
   useEffect(() => {

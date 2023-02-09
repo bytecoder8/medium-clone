@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useFetch } from '../../hooks/useFetch'
 import { Comment } from '../../types'
 import { ServerErrors } from '../ServerErrors'
@@ -39,7 +39,7 @@ export function CommentForm({ articleSlug, onCommentSaved }: PropsType) {
     onCommentSaved(data.comment)
   }, [data, onCommentSaved])
 
-  useEffect(() => {
+  useMemo(() => {
     if (!error) {
       return
     }

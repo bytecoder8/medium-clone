@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { CurrentUserContext } from '../../context/currentUser'
 import { useFetch } from '../../hooks/useFetch'
 import { Comment } from '../../types'
@@ -40,7 +40,7 @@ export function Comments({articleSlug}: {articleSlug: string}) {
     doFetch()
   }, [doFetch])
 
-  useEffect(() => {
+  useMemo(() => {
     if (!data) {
       return
     }
