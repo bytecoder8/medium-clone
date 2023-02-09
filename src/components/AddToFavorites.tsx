@@ -8,10 +8,11 @@ interface PropsType {
   isFavorited: boolean
   favoritesCount: number
   articleSlug: string
+  enabled?: boolean
   text?: string
 }
 
-export function AddToFavorites({isFavorited, favoritesCount, articleSlug, text}: PropsType) {
+export function AddToFavorites({isFavorited, favoritesCount, articleSlug, enabled = true, text}: PropsType) {
   const apiUrl = `/articles/${articleSlug}/favorite`
   const {doFetch, data, isLoading} = useFetch<{article: Article}>(apiUrl)
 
@@ -20,6 +21,9 @@ export function AddToFavorites({isFavorited, favoritesCount, articleSlug, text}:
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
+    if (!enabled) {
+      return
+    }
     doFetch({
       method: isFavoritedRecent ? 'DELETE' : 'POST'
     })
